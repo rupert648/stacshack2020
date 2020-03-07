@@ -89,6 +89,26 @@ let count = 0;
 
 
 
+function swipeRight(){
+  //accept parent
+  //called on event: swipe right
+  let req = {}
+  //let user_email = 
+  //let parent_email = 
+  
+
+}
+
+function swipeLeft(){
+  //reject parent
+  //called on event: swipe left
+}
+
+
+
+
+
+
 function displayParentProfile(parent){
 
 }
