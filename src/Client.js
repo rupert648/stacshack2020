@@ -116,8 +116,16 @@ function swipeLeft(){
 
 
 function displayParentProfile(parent){
+    document.getElementById("card_image").src = parent["photo"]; //change image link
+    document.getElementById("Criteria 1").innerHTML = "Alcohol: " + parent["alcohol"];
+    document.getElementById("Criteria 2").innerHTML = "Department: " + parent["department"];
+    document.getElementById("Criteria 3").innerHTML = "Interests: " + parent["interests"];
+    document.getElementById("Criteria 4").innerHTML = "Number of children: " + parent["number_children"];
+    document.getElementById("Criteria 5").innerHTML = "Family name: " + parent["night"];
 
 }
+
+
 
 function storeUserLocal(user_info){
     // Store
@@ -155,11 +163,16 @@ connection.onmessage = function (e) {
   let obj = JSON.parse(message);
   if (obj["response"] == "child_login") {
     let parent_list = obj["parents_list"];
-
+    
     for(const parent of parent_list){
-      var markup = displayParentProfile(parent);
-      document.getElementsByTagName("parentcard")[0].innerHTML = markup //CHANGE TAGNAME
+      // var markup = 
+      displayParentProfile(parent);
+      // document.getElementsById("card").innerHTML = markup
     }
+    //  
+    // displayParentProfile(parent_list);
+    // document.getElementsById("card").innerHTML = markup //CHANGE TAGNAME
+    
     //send another user list request to server?
     //would need to track users already viewed?
     //set page to display "no more parent profiles to view please come back later"
