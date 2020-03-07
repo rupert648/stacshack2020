@@ -14,20 +14,14 @@ const fileInfo_keys = [
 ws.onopen = function() {
   //send out a message requesting information about the path sent to us
   let message = `{
-                  "request":"child_signup",
-                   	"signup_info":
-                   {
+                    "request":"child_login",
+                    "login_info":
+                      {
                         "email":"user@st-andrews.ac.uk",
-                        "password":"test",
-                        "name":"firstname secondname",
-                        "photo":"hyperlink",
-                        "department":"science",
-                        "alcohol":"yes",
-                        "interests":"outdoors",
-                        "number_children":"10",
-                        "night":"601 bop"
-                  }
-              }`
+                        "password":"test"
+                      }
+                 }
+                 `
 
   ws.send(message);
   console.log("message sent!...  "+message);
