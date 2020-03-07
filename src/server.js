@@ -1,24 +1,22 @@
 "use strict";
 
-let dlj = require("./dir_list_json.js");  //class given to us
 let os = require('os'); //operating system module
 let ws = require('ws')  //websocket module
 let HTTP = require('http')  //http module
 let fs = require('fs')  //filesystem module
-let firebase = require('firebase')  //firebase module
 
 let css = "/dir_list.css" //path for css file
 
 const port = 21436;
 
 //////////////////// DATABASE INIT ////////////////////
-var admin = require("firebase-admin");
+const sqlite3 = require('sqlite3').verbose();
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://stacshack2020.firebaseio.com"
+let db = new sqlite3.Database('../database/stacshack2020.db', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log('Connected to the in-memory SQlite database.');
 });
 
 //use this to generate the html for the html file we first send out.
@@ -45,7 +43,7 @@ function generateHTML(markup) {
   </html>
   `;
 
-  return header+markup+footer;
+  return header+footer;
 }
 
 
@@ -58,7 +56,7 @@ function serveApp(request, response) {
       //send the HTML
       response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
-      response.end(generateHTML(markup));
+      response.end(generateHTML());
       break;
 
 
@@ -97,17 +95,82 @@ const httpserver = HTTP.createServer(serveApp).listen(port, os.hostname);
 //websocket server
 const wss = new ws.Server({ server: httpserver });
 
+function convertToJson(responseType, parent_list) {
+  let reply = {response: responseType, parents_list: parent_list};
+  let JsonReply = JSON.stringify(reply); // convert to JSON
+  return JsonReply;
+}
+
 //when we get a connection
 wss.on('connection', (ws) => {
     //event handler for when we get a message
     ws.on('message', (message) => {
         //message is a JSON string
         //parse it to a Javascript object
+        console.log(message);
+        let request = JSON.parse(message);
+        switch(request["request"]) {
+          case "child_signup":
+              //put into db
+            let signup_info = request["signup_info"];
+            let email = signup_info["email"];
+            //var email_regex = new RegExp("^([a-zA-Z0-9_\-\.]+)@st-andrews.ac.uk");
+            /*if (!email.match(email_regex)) {
+              ws.send(convertToJson("error", "email"));
+            }*/
+            let userID = email.split("@")[0];
+            let password = signup_info["password"];
+            let name = signup_info["name"];
+            let photo = signup_info["photo"];
+            let department = signup_info["department"];
+            let alcohol = signup_info["alcohol"];
+            let interests = signup_info["interests"];
+            let numb_child = signup_info["number_children"];
+            let night = signup_info["night"];
+
+
+
+            //table - email | password | name | photo | department | alcohol | interestes | numb_child | night
+
+            db.run(`INSERT INTO children(password, email, userID, name, photo, department, alcohol, interests, numb_child, night) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                  [password, email, userID, name, photo, department, alcohol, interests, numb_child, night], function(err) {
+                    if (err) {
+                      return console.log(err.message);
+                    }
+
+                    console.log("A row has been inserted with the values:");
+                    console.log(JSON.stringify(signup_info));
+                    console.log("with rowid ${this.lastID}")
+                  });
+
+            break;
+
+          case "child_login":
+            let login_info = request["login_info"];
+            //let email = login_info["email"];
+            let passwrd = login_info["password"];
+
+
+
+            break;
+
+        }
 
 
     });
 
 });
+//
+// wss.onclose = function(event){
+//
+//
+// });
 
 //log out the server host and port number so we can easily connect.
 console.log(os.hostname+":"+port);
+// db.close((err) => {
+//   if (err) {
+//     return console.error(err.message);
+//   }
+//   console.log('Close the database connection.');
+// });
