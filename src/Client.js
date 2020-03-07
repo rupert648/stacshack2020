@@ -126,11 +126,11 @@ function storeUserLocal(user_info){
 
 
 function userLogin(){
-  //called on login
+  //called on click of login button
   //get email from HTML
-  let email
+  let email = document.getElementsByTagName("input")[0].innerHTML;
   //get password from HTML
-  let password
+  let password = document.getElementsByTagName("input")[1].innerHTML;
   //create user login object
   let user_login_info = {}
   user_login_info["email"] = email;
