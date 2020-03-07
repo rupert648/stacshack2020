@@ -147,8 +147,32 @@ wss.on('connection', (ws) => {
 
           case "child_login":
             let login_info = request["login_info"];
-            //let email = login_info["email"];
+            let email = login_info["email"];
             let passwrd = login_info["password"];
+
+            let sql = 'SELECT password FROM children WHERE email = ?'
+            db.get(sql, [email], (err, row) => {
+              if (err) {
+                return console.error(err.message);
+              }
+              if (row) {
+                // correct password
+                if (row.password === passwrd) {
+
+                }
+                // incorrect password
+                else {
+
+                }
+              }
+              // no user in database
+              else {
+                ws.send(convertToJson)
+              }
+            }
+            )
+
+            getMatches(email);
 
 
 
@@ -160,6 +184,11 @@ wss.on('connection', (ws) => {
     });
 
 });
+
+
+let getMatches = function(email) {
+    
+}
 //
 // wss.onclose = function(event){
 //
