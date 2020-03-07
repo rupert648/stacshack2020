@@ -1,0 +1,324 @@
+
+body {
+			background-position: center center;
+			background-repeat:  no-repeat;
+			background-attachment: fixed;
+			background-size:  cover;
+			margin: 0px;
+}
+
+.container {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center
+}
+
+.box {
+		width: 460px;
+		height: 600px;
+		position: relative;
+		background: rgba(255, 255, 255, 0.14);
+		border-radius: 5px;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		-webkit-transition: .3s ease;
+		transition: .3s ease;
+}
+
+	.box .top {
+		width: 100%;
+		border-left: 5px solid #ddd;
+		border-radius: 100%;
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+
+
+	.box .form .input-container {
+	  position: relative;
+	  margin: 0 60px 50px;
+	}
+	.box .form .input-container input {
+	  outline: none;
+	  z-index: 1;
+	  position: relative;
+	  background: none;
+	  width: 100%;
+	  height: 60px;
+	  border: 0;
+	  color: #fff;
+	  font-size: 24px;
+	  font-weight: 400;
+	}
+	.box .form .input-container input:focus ~ label {
+	  color: #9d9d9d;
+	  -webkit-transform: translate(-12%, -50%) scale(0.75);
+	          transform: translate(-12%, -50%) scale(0.75);
+	}
+	.box .form .input-container input:focus ~ .bar:before, .box .form .input-container input:focus ~ .bar:after {
+	  width: 50%;
+	}
+	.box .form .input-container input:valid ~ label {
+	  color: #9d9d9d;
+	  -webkit-transform: translate(-12%, -50%) scale(0.75);
+	          transform: translate(-12%, -50%) scale(0.75);
+	}
+	.box .form .input-container label {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  color: #ddd;
+	  font-size: 18px;
+	  font-weight: 300;
+	  line-height: 60px;
+	  -webkit-transition: 0.2s ease;
+	  transition: 0.2s ease;
+	}
+	.box .form .input-container .bar {
+	  position: absolute;
+	  left: 0;
+	  bottom: 0;
+	  background: #757575;
+	  width: 100%;
+	  height: 1px;
+	}
+	.box .form .input-container .bar:before, .box .form .input-container .bar:after {
+	  content: '';
+	  position: absolute;
+	  background: #ed2553;
+	  width: 0;
+	  height: 2px;
+	  -webkit-transition: .2s ease;
+	  transition: .2s ease;
+	}
+	.box .form .input-container .bar:before {
+	  left: 50%;
+	}
+	.box .form .input-container .bar:after {
+	  right: 50%;
+	}
+	.box .form .button-container {
+	  margin: 0 0;
+	  text-align: center;
+	}
+	.box .form .button-container a {
+	  outline: 0;
+	  cursor: pointer;
+	  position: relative;
+	  display: inline-block;
+	  background: 0;
+	  width: 240px;
+	  border: 2px solid #e3e3e3;
+	  padding: 20px 0;
+	  font-size: 18px;
+	  font-weight: 600;
+	  line-height: 1;
+	  text-transform: uppercase;
+	  overflow: hidden;
+	  -webkit-transition: .3s ease;
+	  transition: .3s ease;
+	  text-decoration:none;
+	}
+	.box .form .button-container a span {
+	  position: relative;
+	  z-index: 1;
+	  color: #ddd;
+	  -webkit-transition: .3s ease;
+	  transition: .3s ease;
+	}
+	.box .form .button-container a:before {
+	  content: '';
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  display: block;
+	  background: #ed2553;
+	  width: 30px;
+	  height: 30px;
+	  border-radius: 100%;
+	  margin: -15px 0 0 -15px;
+	  opacity: 0;
+	  -webkit-transition: .3s ease;
+	  transition: .3s ease;
+	}
+	.box .form .button-container a:hover, .box .form .button-container a:active, .box .form .button-container a:focus {
+	  border-color: #ed2553;
+	}
+	.box .form .button-container a:hover span, .box .form .button-container a:active span, .box .form .button-container a:focus span {
+	  color: #ed2553;
+	}
+	.box .form .button-container a:active span, .box .form .button-container a:focus span {
+	  color: #ffffff;
+	}
+	.box .form .button-container a:active:before, .box .form .button-container a:focus:before {
+	  opacity: 1;
+	  -webkit-transform: scale(10);
+	  transform: scale(10);
+	}
+	.box .form .footer {
+	  margin: 40px 0 0;
+	  color: #d3d3d3;
+	  font-size: 18px;
+	  font-weight: 300;
+	  text-align: center;
+	}
+	.box .form .footer a {
+	  color: inherit;
+	  text-decoration: none;
+	  -webkit-transition: .3s ease;
+	  transition: .3s ease;
+	}
+	.box .form .footer a:hover {
+	  color: #bababa;
+	}
+
+	/* default styles here for older browsers.
+		 I tend to go for a 600px - 960px width max but using percentages
+	*/
+	@media only screen and (min-width:960px){
+			/* styles for browsers larger than 960px; */
+			.box {
+				width: 460px;
+				height: 600px;
+			}
+	}
+	@media only screen and (min-width:1440px){
+			/* styles for browsers larger than 1440px; */
+			.box {
+				width: 460px;
+				height: 600px;
+			}
+	}
+	@media only screen and (min-width:2000px){
+			/* for sumo sized (mac) screens */
+			.box {
+				width: 460px;
+				height: 600px;
+			}
+	}
+	@media only screen and (max-device-width:480px) and (orientation:portrait) {
+		 /* styles for mobile browsers smaller than 480px; (iPhone) */
+		 .box {
+			width: 300px;
+			height: 460px;
+		 }
+
+		 .box .top {
+			 margin-top: 0px;
+	 		 margin-bottom: 0px;
+		 }
+
+		 .box .top .logo {
+	     background-size: 200px auto;
+			 background-position: left center;
+	 	}
+
+		.box .form .footer {
+			margin: 5px 0 0;
+		}
+	}
+
+	@media only screen and (max-device-width:640px) and (orientation:landscape) {
+		 /* styles for mobile browsers smaller than 480px; (iPhone) */
+		 .box {
+			width: 300px;
+			height: 460px;
+		 }
+
+		 .box .top {
+			 margin-top: 0px;
+	 		 margin-bottom: 0px;
+		 }
+
+		 .box .top .logo {
+	     background-size: 200px auto;
+			 background-position: left center;
+	     height: 80px;
+	 	}
+
+
+		.box .form .input-container {
+		    margin: 0 30px 10px;
+		}
+
+		.box .form .footer {
+			margin: 5px 0 0;
+		}
+	}
+
+	@media only screen and (device-width:768px){
+		 /* default iPad screens */
+		 .box {
+			width: 460px;
+			height: 600px;
+		 }
+	}
+	/* different techniques for iPad screening */
+	@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+		/* For portrait layouts only */
+		.box {
+			width: 460px;
+			height: 600px;
+		}
+	}
+
+	@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+		/* For landscape layouts only */
+		.box {
+			width: 460px;
+			height: 600px;
+		}
+	}
+
+	@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation:portrait) {
+		/* For iPhone 6  portrait*/
+		.box {
+			width: 340px;
+			height: 600px;
+		}
+	}
+
+	@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation:landscape) {
+		/* For iPhone 6  landscape*/
+		.box {
+			width: 600px;
+			height: 340px;
+		}
+
+		.box .top {
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+
+		.box .top .logo {
+			background-size: 200px auto;
+			background-position: left center;
+			height: 80px;
+	 }
+
+
+	 .box .form .input-container {
+			 margin: 0 30px 10px;
+	 }
+
+	 .box .form .footer {
+		 margin: 5px 0 0;
+	 }
+
+	}
+
+	@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation:landscape) {
+		/* For iPhone 5  landscape*/
+		.box {
+			width: 440px;
+			height: 300px;
+		}
+		.box .form .button-container a {
+			padding: 10px 0;
+		}
+	}
