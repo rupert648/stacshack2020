@@ -93,15 +93,21 @@ function swipeRight(){
   //accept parent
   //called on event: swipe right
   let req = {}
-  //let user_email = 
-  //let parent_email = 
-  
+  let user_email = sessionStorage.getItem("email");
 
+  let parent_email 
+  //= FROM HTML 
+  req["user_email"] = user_email;
+  req["parent_email"] = parent_email;
+
+  connection.send(JSON.stringify(req));
 }
 
 function swipeLeft(){
   //reject parent
   //called on event: swipe left
+
+  //nothing sent to server??
 }
 
 
@@ -113,10 +119,27 @@ function displayParentProfile(parent){
 
 }
 
+function storeUserLocal(user_info){
+    // Store
+    sessionStorage.setItem("user_email", user_info["email"]);
+}
 
 
-
-
+function userLogin(){
+  //called on login
+  //get email from HTML
+  let email
+  //get password from HTML
+  let password
+  //create user login object
+  let user_login_info = {}
+  user_login_info["email"] = email;
+  user_login_info["password"] = password; 
+  //create JSON string user info
+  storeUserLocal(user_login_info);
+  //send JSON string 
+  connection.send(JSON.stringify(user_login_info));
+}
 
 /**
  * Callback for a message received from server.
