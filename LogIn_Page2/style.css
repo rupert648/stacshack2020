@@ -1,5 +1,6 @@
 
 body {
+			background-color: darkgreen ;
 			background-position: center center;
 			background-repeat:  no-repeat;
 			background-attachment: fixed;
@@ -38,6 +39,17 @@ body {
 		margin-bottom: 40px;
 	}
 
+	.box .top .logo {
+		background-color: darkcyan;
+    width: 290px;
+    height: 117px;
+		margin: 0 0 0 30px;
+		opacity: 0.5;
+	}
+
+	.box .form {
+
+	}
 
 	.box .form .input-container {
 	  position: relative;
