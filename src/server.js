@@ -101,6 +101,7 @@ function convertToJson(responseType, parent_list) {
   return JsonReply;
 }
 
+
 //when we get a connection
 wss.on('connection', (ws) => {
     //event handler for when we get a message
@@ -114,10 +115,10 @@ wss.on('connection', (ws) => {
               //put into db
             let signup_info = request["signup_info"];
             let email = signup_info["email"];
-            //var email_regex = new RegExp("^([a-zA-Z0-9_\-\.]+)@st-andrews.ac.uk");
-            /*if (!email.match(email_regex)) {
+            let email_regex = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@st-andrews.ac.uk");
+            if (!email.match(email_regex)) {
               ws.send(convertToJson("error", "email"));
-            }*/
+            }
             let userID = email.split("@")[0];
             let password = signup_info["password"];
             let name = signup_info["name"];
@@ -147,34 +148,34 @@ wss.on('connection', (ws) => {
 
           case "child_login":
             let login_info = request["login_info"];
-            let email = login_info["email"];
+            let email2 = login_info["email"];
             let passwrd = login_info["password"];
 
-            let sql = 'SELECT password FROM children WHERE email = ?'
-            db.get(sql, [email], (err, row) => {
+            let sql = 'SELECT * FROM children WHERE children.email = ?'
+            db.get(sql, [email2], (err, row) => {
               if (err) {
                 return console.error(err.message);
               }
               if (row) {
                 // correct password
                 if (row.password === passwrd) {
-
+                  console.log("we're in");
+                  let response = getMatches(row);
+                  for (let i = 0 ; i  < response.length ; i++) {
+                    console.log(response[i]);
+                  }
+                  ws.send(convertToJson("child_login", response));
                 }
                 // incorrect password
                 else {
-
+                  ws.send(convertToJson("error", "incorrect password"));
                 }
               }
               // no user in database
               else {
-                ws.send(convertToJson)
+                ws.send(convertToJson("error", "no user"));
               }
-            }
-            )
-
-            getMatches(email);
-
-
+            });
 
             break;
 
@@ -186,8 +187,43 @@ wss.on('connection', (ws) => {
 });
 
 
-let getMatches = function(email) {
-    
+let getMatches = function(childRow) {
+
+  let bestMatches = [];  //length 50, type row objects
+
+  let sql = 'SELECT * FROM parents'
+  db.all(sql, [], (err, parentRows) => {
+    if (err) {
+      throw err;
+    }
+    console.log("reach parent rows");
+    parentRows.forEach((parentRow) => {
+      console.log("working on " + parentRow.userID);
+      let count = 0;
+
+      count = (parentRow.department == childRow.department ? count+1: count);
+      count = (parentRow.alcohol == childRow.alcohol ? count+1: count);
+      count = (parentRow.interests == childRow.interests ? count+1: count);
+      count = (parentRow.numb_child == childRow.numb_child ? count+1: count);
+      count = (parentRow.night == childRow.night ? count+1: count);
+
+      parentRow.metric = count;
+      console.log("at best matches");
+      if (bestMatches.length < 50) {
+        bestMatches.push(parentRow);
+      } else {
+        for (let i = 0; i < bestMatches.length; i++) {
+          if (bestMatches.metric < count) {
+            bestMatches[i] = parentRow;
+            break;
+          }
+        }
+      }
+
+    });
+  });
+
+  return bestMatches;
 }
 //
 // wss.onclose = function(event){
