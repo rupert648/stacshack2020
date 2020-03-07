@@ -95,8 +95,8 @@ function swipeRight(){
   let req = {}
   let user_email = sessionStorage.getItem("email");
 
-  let parent_email 
-  //= FROM HTML 
+  let parent_email
+  //= FROM HTML
   req["user_email"] = user_email;
   req["parent_email"] = parent_email;
 
@@ -128,16 +128,20 @@ function storeUserLocal(user_info){
 function userLogin(){
   //called on click of login button
   //get email from HTML
-  let email = document.getElementsByTagName("input")[0].innerHTML;
+  let email = document.getElementById("emailInput").value;
   //get password from HTML
-  let password = document.getElementsByTagName("input")[1].innerHTML;
+  let password = document.getElementById("passwordInput").value;
   //create user login object
   let user_login_info = {}
-  user_login_info["email"] = email;
-  user_login_info["password"] = password; 
+  user_login_info["request"] = "child_login";
+  user_login_info["login_info"] ={
+    email: email,
+    password: password
+  };
+
   //create JSON string user info
   storeUserLocal(user_login_info);
-  //send JSON string 
+  //send JSON string
   connection.send(JSON.stringify(user_login_info));
 }
 
@@ -156,7 +160,7 @@ connection.onmessage = function (e) {
       var markup = displayParentProfile(parent);
       document.getElementsByTagName("parentcard")[0].innerHTML = markup //CHANGE TAGNAME
     }
-    //send another user list request to server? 
+    //send another user list request to server?
     //would need to track users already viewed?
     //set page to display "no more parent profiles to view please come back later"
   }

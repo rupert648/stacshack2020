@@ -54,15 +54,26 @@ function serveApp(request, response) {
   switch (request.url) {  //check to see what the request is
     case "/": //HTML
       //send the HTML
-      response.writeHead(200, {"Content-Type": "text/html"});
+      //response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
-      response.end(generateHTML());
+      fs.readFile("../LogIn_Page2/index.html", function (error, data) {
+        console.log("got here");
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading script")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/html"});
+
+          response.end(data)
+        }
+      });
       break;
 
 
-    case "/client.js":  //JS
+    case "/Client.js":  //JS
     //try and read our client side javascript file.
-    fs.readFile(__dirname + "/client.js", function (error, data) {
+    fs.readFile(__dirname + "/Client.js", function (error, data) {
       if (error) {
         response.writeHead(500)
         response.end("Error loading script")
@@ -75,7 +86,7 @@ function serveApp(request, response) {
     break;
     case "/style.css": //CSS
       //try and read our CSS file
-      fs.readFile(__dirname + "/dir_list.css", function (error, data) {
+      fs.readFile("../LogIn_Page2/style.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
@@ -222,7 +233,10 @@ let getMatches = function(childRow) {
 
     });
   });
-
+  console.log(bestMatches.length);
+  for (let i = 0 ; i  < bestMatches.length ; i++) {
+    console.log(bestMatches[i]);
+  }
   return bestMatches;
 }
 //
