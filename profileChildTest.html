@@ -2,16 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-
-	<div class="header">
-  <h1><center>Raisin-A-Family!</center></h1>
-	</div>
-	<title>Raisin-A-Family! Set Up Your Profile</title>
+	<title>My Login Page &mdash; Bootstrap 4 Login Page Snippet</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href = "profilePageChild.css" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="css/my-login.css">
 </head>
-
 <body class="my-login-page">
 	<section class="h-100">
 		<div class="container h-100">
@@ -19,32 +15,33 @@
 				<div class="card-wrapper">
 					<div class="card fat">
 						<div class="card-body">
+							<h4 class="card-title">Setting Up Your Profile</h4>
 							<form method="POST" class="my-login-validation" novalidate="">
 
-								<div class="form-group text-white">
+								<div class="form-group">
 									<label for="email">Email Address:</label><br>
 									<input type="text" id="email" name="email" class="form-control" required autofocus>
 
 								</div>
 
-								<div class="form-group text-white">
+								<div class="form-group">
 									<label for="name">Name:</label><br>
 								  <input type="text" id="name" name="name" class = "form-control" required autofocus>
 								</div>
 
-								<div class="form-group text-white">
+								<div class="form-group">
 									<label for="password">Password:</label>
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
 
-								<div class = "form-group text-white">
+								<div class = "form-group">
 									<label for="photo">Photo Link:</label><br>
 									<input type="text" id="photo" name="photo" value="" class = form-control required autofocus>
 								</div>
 
-								<div class = "form-group text-white">
-								<label for="department">School of:</label><br>
-								<select id="department: " class = form-control  required autofocus>
+								<div>
+								<label for="department">School Of:</label><br>
+								<select id="department: " class = form-control required autofocus>
 									<option value="art">Arts</option>
 									<option value="science">Science</option>
 									<option value="medicine">Medicine</option>
@@ -52,7 +49,7 @@
 								</select></br>
 							</div>
 
-							<div class = "form-group text-white">
+							<div>
 							<label for="interests">Interests:</label><br>
 							<select id="interests: " class = form-control required autofocus>
 								<option value="sports">Sports</option>
@@ -65,7 +62,7 @@
 							</select></br>
 						</div>
 
-						<div class = "form-group text-white">
+						<div>
 						<label for="night">Nightlife:</label><br>
 						<select id="night: " class = form-control required autofocus>
 							<option value="601_bop">601 Club Night</option>
@@ -76,23 +73,22 @@
 						</select></br>
 					</div>
 
-					<div class = "form-group text-white">
+					<div>
 						<label for="alcohol"> Do you drink alcohol?</label>
 						<input type="checkbox" id="alcohol" name="alcohol" value="Yes" class = form-control required autofocus >
 					</div>
 
-					<div class = "form-group text-white">
+					<div>
 						<label for="number_children">Desired number of children in family:</label>
 						<input type="text" name="number_children" pattern="[1-20]" title="number_children" class = form-control required autofocus/><br>
 					</div>
 
 
-					<div class="button-container"><center>
-						<button type="button" class="btn btn-outline-light btn-lg text-white">
-							<center>Submit</center></center></button>
-
-						</span></a>
-					</div>
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+										Submit
+									</button>
+								</div>
 
 							</form>
 						</div>
