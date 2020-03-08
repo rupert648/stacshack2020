@@ -274,6 +274,8 @@ wss.on('connection', (ws) => {
         let request = JSON.parse(message);
         switch(request["request"]) {
           case "child_signup":
+            console.log("received child_signup")
+            console.log(request)
               //put into db
             let signup_info = request["signup_info"];
             let email = signup_info["email"];
@@ -304,7 +306,35 @@ wss.on('connection', (ws) => {
                     console.log("A row has been inserted with the values:");
                     console.log(JSON.stringify(signup_info));
                     console.log("with rowid ${this.lastID}")
+                    let sql = 'SELECT * FROM children WHERE children.email = ?';
+                    db.get(sql, [email], (err, row) => {
+                      if (err) {
+                        return console.error(err.message);
+                      }
+                      if (row) {
+                        console.log(JSON.stringify(row));
+                        // correct password
+                        if (row.password === password) {
+                          console.log("we're in");
+                          let response = getMatches(row);
+                          response.then((result) => {
+                            console.log(result.length);
+                            for (let i = 0 ; i  < result.length ; i++) {
+                              console.log(result[i]);
+                            }
+                            ws.send(convertToJson("html_parents_list", index2));
+                            ws.send(convertToJson("child_login", result));
+                          }, (error) => {
+                            console.log(error);
+                          });
+                        }
+                        // incorrect password
+                        else {
+                          ws.send(convertToJson("bad_login", "incorrect password"));
+                        }
+                      }
                   });
+                });
 
             break;
 
@@ -356,6 +386,7 @@ wss.on('connection', (ws) => {
                     }
 
                     console.log("A row has been inserted with the values:");
+
                   });
             break;
 

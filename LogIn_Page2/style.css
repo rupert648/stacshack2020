@@ -1,6 +1,6 @@
 
 body {
-			background-color: darkgreen ;
+			background-color: #51A5C5 ;
 			background-position: center center;
 			background-repeat:  no-repeat;
 			background-attachment: fixed;
@@ -21,7 +21,7 @@ body {
 		width: 460px;
 		height: 600px;
 		position: relative;
-		background: rgba(255, 255, 255, 0.14);
+		background-color: #992E2E;
 		border-radius: 5px;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
@@ -40,7 +40,7 @@ body {
 	}
 
 	.box .top .logo {
-		background-color: darkcyan;
+		background-color: #A31621;
     width: 290px;
     height: 117px;
 		margin: 0 0 0 30px;
@@ -54,6 +54,7 @@ body {
 	.box .form .input-container {
 	  position: relative;
 	  margin: 0 60px 50px;
+
 	}
 	.box .form .input-container input {
 	  outline: none;
@@ -68,7 +69,7 @@ body {
 	  font-weight: 400;
 	}
 	.box .form .input-container input:focus ~ label {
-	  color: #9d9d9d;
+	  color: #A31621;
 	  -webkit-transform: translate(-12%, -50%) scale(0.75);
 	          transform: translate(-12%, -50%) scale(0.75);
 	}
@@ -76,7 +77,7 @@ body {
 	  width: 50%;
 	}
 	.box .form .input-container input:valid ~ label {
-	  color: #9d9d9d;
+	  color: #A31621;
 	  -webkit-transform: translate(-12%, -50%) scale(0.75);
 	          transform: translate(-12%, -50%) scale(0.75);
 	}
@@ -84,7 +85,7 @@ body {
 	  position: absolute;
 	  top: 0;
 	  left: 0;
-	  color: #ddd;
+	  color: #fff;
 	  font-size: 18px;
 	  font-weight: 300;
 	  line-height: 60px;
@@ -102,7 +103,7 @@ body {
 	.box .form .input-container .bar:before, .box .form .input-container .bar:after {
 	  content: '';
 	  position: absolute;
-	  background: #ed2553;
+	  background: #fff;
 	  width: 0;
 	  height: 2px;
 	  -webkit-transition: .2s ease;
@@ -115,9 +116,10 @@ body {
 	  right: 50%;
 	}
 	.box .form .button-container {
-	  margin: 0 0;
+	  margin: 0 50;
 	  text-align: center;
 	}
+
 	.box .form .button-container a {
 	  outline: 0;
 	  cursor: pointer;
@@ -136,6 +138,7 @@ body {
 	  transition: .3s ease;
 	  text-decoration:none;
 	}
+
 	.box .form .button-container a span {
 	  position: relative;
 	  z-index: 1;
@@ -162,10 +165,10 @@ body {
 	  border-color: #ed2553;
 	}
 	.box .form .button-container a:hover span, .box .form .button-container a:active span, .box .form .button-container a:focus span {
-	  color: #ed2553;
+	  color: #fff;
 	}
 	.box .form .button-container a:active span, .box .form .button-container a:focus span {
-	  color: #ffffff;
+	  color: #fff;
 	}
 	.box .form .button-container a:active:before, .box .form .button-container a:focus:before {
 	  opacity: 1;
@@ -174,8 +177,8 @@ body {
 	}
 	.box .form .footer {
 	  margin: 40px 0 0;
-	  color: #d3d3d3;
-	  font-size: 18px;
+	  color: #fff;
+		font-family: 'Bangers';font-size: 28px;
 	  font-weight: 300;
 	  text-align: center;
 	}
@@ -186,7 +189,7 @@ body {
 	  transition: .3s ease;
 	}
 	.box .form .footer a:hover {
-	  color: #bababa;
+	  color: #fff;
 	}
 
 	/* default styles here for older browsers.

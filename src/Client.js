@@ -144,7 +144,7 @@ function httpGetScript(theUrl)
   xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
   xmlHttp.send( null );
   // window.open(theUrl);
-  
+
   return xmlHttp.responseText;
 }
 

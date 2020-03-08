@@ -1,0 +1,120 @@
+
+body{
+	background-color: #51A5C5 ;
+	background-position: center center;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size:  cover;
+	margin: 100px;
+}
+
+.header {
+	width: 460px;
+	height: 50px;
+	position: relative;
+	background-color: #992E2E;
+	color: white;
+	border-radius: 5px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+
+
+
+.card {
+	width: 460px;
+	height: 1000px;
+	position: relative;
+	background-color: #992E2E;
+	border-radius: 5px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+/*Add textbox style*/
+.textbox{
+	margin-bottom: 25px;
+	padding: 5px;
+	border: 0;
+	background-color: #EAEDED;
+	border-bottom: 2px solid #8E44AD;
+	font-size: 15px;
+}
+
+	.box .form .button-container {
+		margin: 0 50;
+		text-align: center;
+	}
+	.box .form .button-container a {
+		background-color: #fff;
+		outline: 0;
+		cursor: pointer;
+		position: relative;
+		display: inline-block;
+		background: 0;
+		width: 240px;
+		border: 2px solid #e3e3e3;
+		padding: 20px 0;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 1;
+		text-transform: uppercase;
+		overflow: hidden;
+		-webkit-transition: .3s ease;
+		transition: .3s ease;
+		text-decoration:none;
+	}
+
+	.box .form .button-container a span {
+		position: relative;
+		z-index: 1;
+		color: #ddd;
+		-webkit-transition: .3s ease;
+		transition: .3s ease;
+	}
+	.box .form .button-container a:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: block;
+		background: #ed2553;
+		width: 30px;
+		height: 30px;
+		border-radius: 100%;
+		margin: -15px 0 0 -15px;
+		opacity: 0;
+		-webkit-transition: .3s ease;
+		transition: .3s ease;
+	}
+	.box .form .button-container a:hover, .box .form .button-container a:active, .box .form .button-container a:focus {
+		border-color: #ed2553;
+	}
+	.box .form .button-container a:hover span, .box .form .button-container a:active span, .box .form .button-container a:focus span {
+		color: #fff;
+	}
+	.box .form .button-container a:active span, .box .form .button-container a:focus span {
+		color: #fff;
+	}
+	.box .form .button-container a:active:before, .box .form .button-container a:focus:before {
+		opacity: 1;
+		-webkit-transform: scale(10);
+		transform: scale(10);
+	}
