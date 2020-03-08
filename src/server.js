@@ -379,15 +379,22 @@ wss.on('connection', (ws) => {
             break;
           case "accept_parent":
             console.log(request);
+            console.log("UPDATE children SET parent_email = \""+request.parent_email+"\" WHERE email = \""+request.user_email+"\";");
 
-            db.run(`INSERT INTO children(parent_email VALUES(?) WHERE children.email = `+request.user_email+";", [request.parent_email], function(err) {
-                    if (err) {
-                      return console.log(err.message);
-                    }
+            let data = [request.parent_email, request.user_email];
+            let updateSql = `UPDATE children
+            SET parent_email = ?
+            WHERE email = ?`;
 
-                    console.log("A row has been inserted with the values:");
+            db.run(updateSql, data, function(err) {
+              if (err) {
+                return console.error(err.message);
+              }
 
-                  });
+              console.log(`Row(s) updated: ${this.changes}`);
+
+            });
+
             break;
 
         }
