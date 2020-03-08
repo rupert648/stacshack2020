@@ -8,84 +8,28 @@ const connection = new WebSocket(url);
 let root = "";
 
 
+function signUp(){
+  child_signup_info = {}
+  child_signup_info["request"] = "child_signup";
+  child_signup_info["signup_info"] = {
+    email : document.getElementById("email").value,
+    name : document.getElementById("name").value,
+    password : document.getElementById("password").value,
+    photo : document.getElementById("photo").value,
+    department : document.getElementById("department").value, 
+    alcohol : document.getElementById("alcohol").value,
+    interests : document.getElementById("interests").value,
+    number_children : document.getElementById("number_children").value,
+    night : document.getElementById("night").value
+  }
+  
+  console.log("signed up");
+  console.log(child_signup_info);
 
-/**
- * Function from the dir_list_json starter code.
- * Converts file info from server into HTML.
- * @param {*} fileInfo received from server.
- */
-// function fileInfo2Markup(fileInfo) {
-//   if (!fileInfo) { return null; }
+  connection.send(JSON.stringify(child_signup_info));
+}
 
-//   let markup = "";
 
-//   markup += "\n    <fileinfo type=\"" + fileInfo["type"] + "\">\n";
-//   for (let i = 0; i < fileInfo_keys.length; ++i) {
-//     let k = fileInfo_keys[i];
-//     let v = fileInfo[k];
-//     let a = ""; // attributes for markup tag
-//     if (k.includes("time")) {
-//       // Keep the millisecond time as an attribute, but
-//       // use a user-friendly string to display in markup.
-//       // The millisecond time could be useful for ordering files.
-//       let t = new Date();
-//       t.setTime(v);
-//       a += " " + k + "=\"" + v + "\"";
-//       v = t.toLocaleString("en-GB");
-//     }
-//     if (k == "filename" && fileInfo["type"] == "directory") {
-//       //added span tag and event handler to move to a subdirectory if a user clicks on it's name
-//       markup += "      <" + k + a + ">" + "<span onclick=\"changeDirectory('" + v + "');\">" + v + "<\/span>" + "</" + k + ">\n";
-//     }
-//     else {
-//       markup += "      <" + k + a + ">" + v + "</" + k + ">\n";
-
-//     }
-//   }
-//   markup += "    </fileinfo>\n";
-
-//   return markup;
-// }
-
-// /**
-//  * Function from the dir_list_json starter code.
-//  * Converts directory info from server into HTML.
-//  * @param {*} dirInfo received from Server
-//  */
-// function dirInfo2Markup(dirInfo) {
-//   if (!dirInfo) { return null; }
-
-//   let markup = "";
-
-//   // leading spaces and "\n" for convenience only - not neededs
-//   markup += "\n  <dirinfo>\n\n";
-//   markup += "      <server>" + dirInfo["server"] + "</server>\n\n";
-//   markup += "      <directoryname>" + dirInfo["directoryname"] + "</directoryname>\n\n";
-//   markup += "<button id=upButton onclick=\"goUp();\">Go up</button>"; //go up button added
-//   markup += "<br></br>"
-//   markup += "<input id=searchBar type=search placeholder=\"Search files...\"> \n";
-//   markup += "<button id=searchButton onClick=\"search();\">Search</button> \n";
-//   markup += "<br></br>"
-
-//   let files = dirInfo["files"];
-//   let filenames = Object.keys(files);
-
-//   markup += "    <files>\n";
-//   markup += generateTableHeader();
-
-//   for (let f = 0; f < filenames.length; ++f) {
-//     let fileInfo = files[filenames[f]];
-//     markup += fileInfo2Markup(fileInfo);
-//   }
-//   markup += "\n    </files>\n";
-//   markup += "<br></br>"
-//   markup += makeCheckBoxes(); //check boxes added
-//   markup += "<hr />"
-//   markup += "<searchResults style=display:none>Search</searchResults>"; //Section to display search results after a search is made.
-//   markup += "\n  </dirinfo>\n";
-
-//   return markup;
-// }
 
 
 
@@ -93,11 +37,11 @@ function swipeRight(){
   //accept parent
   //called on event: swipe right
   if (count < parent_list.length) {
+    let parent_email = parent_list[count].email;
     let parent = parent_list[count++];
     let req = {}
     let user_email = sessionStorage.getItem("user_email");
 
-    let parent_email = sessionStorage.getItem("parent_email");
     //= FROM HTML
     req["request"] = "accept_parent";
     req["user_email"] = user_email;
@@ -144,7 +88,8 @@ function displayParentProfile(parent){
 
 function storeUserLocal(user_info){
     // Store
-    sessionStorage.setItem("user_email", user_info["email"]);
+    console.log(user_info.login_info.email);
+    sessionStorage.setItem("user_email", user_info.login_info.email);
 }
 
 var parent_list = [];
@@ -196,7 +141,7 @@ connection.onmessage = function (e) {
         parent_list = obj["parents_list"];
         // for(const parent of parent_list){
         //   parent_list.next();
-        sessionStorage.setItem("parent_email", parent["email"]);
+        //sessionStorage.setItem("parent_email", parent["email"]);
           // var markup =
         count = 0;
         console.log(document.getElementsByTagName("button"));
@@ -208,6 +153,14 @@ connection.onmessage = function (e) {
 
         document.getElementsByTagName("button")[1].setAttribute("onclick", "swipeRight()");
         break;
+        case "bad_login":
+          //error
+          alert("Bad login attempt, try changing email or user name");
+          break;
+        case "bad_signup":
+          //error 
+          alert("Bad signup attempt, please check your details are correct and you are using a University of St Andrews email address");
+          break;
   }
       // document.getElementsById("card").innerHTML = markup
     // }

@@ -262,18 +262,26 @@ wss.on('connection', (ws) => {
                 }
                 // incorrect password
                 else {
-                  ws.send(convertToJson("error", "incorrect password"));
+                  ws.send(convertToJson("bad_login", "incorrect password"));
                 }
               }
               // no user in database
               else {
-                ws.send(convertToJson("error", "no user"));
+                ws.send(convertToJson("bad_login", "no user"));
               }
             });
 
             break;
           case "accept_parent":
             console.log(request);
+
+            db.run(`INSERT INTO children(parent_email VALUES(?) WHERE children.email = VALUES(?)`, [request.parent_email, request.user_email], function(err) {
+                    if (err) {
+                      return console.log(err.message);
+                    }
+
+                    console.log("A row has been inserted with the values:");
+                  });
             break;
 
         }
