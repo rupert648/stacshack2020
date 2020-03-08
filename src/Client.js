@@ -8,7 +8,8 @@ const connection = new WebSocket(url);
 let root = "";
 
 function requestSignUpPage(){
-  httpGet("/profilePageChild.html")
+  httpGetHTML("/profilePageChild.html");
+  httpGetScript("/Client.js");
   // window.open("/profilePageChild.html")
 
   // var xmlHttp = new XMLHttpRequest();
@@ -26,13 +27,13 @@ function signUp(){
     name : document.getElementById("name").value,
     password : document.getElementById("password").value,
     photo : document.getElementById("photo").value,
-    department : document.getElementById("department").value, 
+    department : document.getElementById("department").value,
     alcohol : document.getElementById("alcohol").value,
     interests : document.getElementById("interests").value,
     number_children : document.getElementById("number_children").value,
     night : document.getElementById("night").value
   }
-  
+
   console.log("signed up");
   console.log(child_signup_info);
 
@@ -86,12 +87,13 @@ function swipeLeft(){
 
 
 function displayParentProfile(parent){
+  console.log(parent);
     document.getElementById("card_image").src = parent["photo"]; //change image link
     document.getElementById("Criteria 1").innerHTML = "Alcohol: " + parent["alcohol"];
     document.getElementById("Criteria 2").innerHTML = "Department: " + parent["department"];
     document.getElementById("Criteria 3").innerHTML = "Interests: " + parent["interests"];
-    document.getElementById("Criteria 4").innerHTML = "Number of children: " + parent["number_children"];
-    document.getElementById("Criteria 5").innerHTML = "Family name: " + parent["night"];
+    document.getElementById("Criteria 4").innerHTML = "Number of children: " + parent["numb_child"];
+    document.getElementById("Criteria 5").innerHTML = "family name: " + parent["family_name"];
 
 }
 
@@ -126,13 +128,23 @@ function userLogin(){
   connection.send(JSON.stringify(user_login_info));
 }
 
-function httpGet(theUrl)
+function httpGetHTML(theUrl)
 {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
   xmlHttp.send( null );
   // window.open(theUrl);
   document.location = theUrl;
+  return xmlHttp.responseText;
+}
+
+function httpGetScript(theUrl)
+{
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+  xmlHttp.send( null );
+  // window.open(theUrl);
+  
   return xmlHttp.responseText;
 }
 
@@ -175,7 +187,7 @@ connection.onmessage = function (e) {
           alert("Bad login attempt, try changing email or user name");
           break;
         case "bad_signup":
-          //error 
+          //error
           alert("Bad signup attempt, please check your details are correct and you are using a University of St Andrews email address");
           break;
   }
