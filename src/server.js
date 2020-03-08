@@ -175,17 +175,29 @@ function serveApp(request, response) {
 
     case "/Client.js":  //JS
     //try and read our client side javascript file.
-    fs.readFile(__dirname + "/Client.js", function (error, data) {
-      if (error) {
-        response.writeHead(500)
-        response.end("Error loading script")
-      } else {
-        //send javascript to the client
-        response.writeHead(200, {"Content-Type": "text/script"});
-        response.end(data)
-      }
-    });
-    break;
+      fs.readFile(__dirname + "/Client.js", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading script")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/script"});
+          response.end(data)
+        }
+      });
+      break;
+    case "/carswipes.js":  //JS
+      //try and read our client side javascript file.
+      fs.readFile("../front-end/cardswipes.js", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading script")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/script"});
+          response.end(data)
+        }
+      });
     case "/style.css": //CSS
       //try and read our CSS file
       fs.readFile("../LogIn_Page2/style.css", function (error, data) {
@@ -367,15 +379,22 @@ wss.on('connection', (ws) => {
             break;
           case "accept_parent":
             console.log(request);
+            console.log("UPDATE children SET parent_email = \""+request.parent_email+"\" WHERE email = \""+request.user_email+"\";");
 
-            db.run(`INSERT INTO children(parent_email VALUES(?) WHERE children.email = `+request.user_email+";", [request.parent_email], function(err) {
-                    if (err) {
-                      return console.log(err.message);
-                    }
+            let data = [request.parent_email, request.user_email];
+            let updateSql = `UPDATE children
+            SET parent_email = ?
+            WHERE email = ?`;
 
-                    console.log("A row has been inserted with the values:");
+            db.run(updateSql, data, function(err) {
+              if (err) {
+                return console.error(err.message);
+              }
 
-                  });
+              console.log(`Row(s) updated: ${this.changes}`);
+
+            });
+
             break;
 
         }
