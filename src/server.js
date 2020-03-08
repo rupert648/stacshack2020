@@ -109,6 +109,69 @@ function serveApp(request, response) {
       });
       break;
 
+    case "/profilePageChild.html": //HTML
+      //send the HTML
+      //response.writeHead(200, {"Content-Type": "text/html"});
+      // we generate some default markup to send just in case first request fails.
+      fs.readFile("../Profile_Page_Child/profilePageChild.html", function (error, data) {
+        console.log("got to child signup");
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading script")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/html"});
+
+          response.end(data)
+        }
+      });
+      break;
+
+    case "/profilePageChild.css": //CSS
+      //try and read our CSS file
+      fs.readFile("../Profile_Page_Child/profilePageChild.css", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading css")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/css"});
+          response.end(data)
+        }
+      });
+      break;
+
+    case "/profilePageParent.html": //HTML
+      //send the HTML
+      //response.writeHead(200, {"Content-Type": "text/html"});
+      // we generate some default markup to send just in case first request fails.
+      fs.readFile("../Profile_Page_Parent/profilePageParent.html", function (error, data) {
+        console.log("got to parent signup");
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading script")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/html"});
+
+          response.end(data)
+        }
+      });
+      break;
+
+    case "/profilePageParent.css": //CSS
+      //try and read our CSS file
+      fs.readFile("../Profile_Page_Parent/profilePageParent.css", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading css")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/css"});
+          response.end(data)
+        }
+      });
+      break;
 
     case "/Client.js":  //JS
     //try and read our client side javascript file.
@@ -254,7 +317,7 @@ wss.on('connection', (ws) => {
                     for (let i = 0 ; i  < result.length ; i++) {
                       console.log(result[i]);
                     }
-                    ws.send(convertToJson("html", index2));
+                    ws.send(convertToJson("html_parents_list", index2));
                     ws.send(convertToJson("child_login", result));
                   }, (error) => {
                     console.log(error);
