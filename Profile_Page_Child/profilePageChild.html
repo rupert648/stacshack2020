@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
 <body>
 
 <h2>Profile Creation Page</h2>
 
-<form onsubmit="signUp()">
-  
   <label for="email">Email Address:</label><br>
   <input type="text" id="email" name="email" value=""><br>
 
@@ -23,7 +21,7 @@
   <input type="text" id="photo" name="photo" value=""><br>
 
   <label for="department">School Of:</label><br>
-  <select id="department: ">
+  <select id="department">
     <option value="art">Arts</option>
     <option value="science">Science</option>
     <option value="medicine">Medicine</option>
@@ -32,7 +30,7 @@
 
 
   <label for="interests">Interests:</label><br>
-  <select id="interests: ">
+  <select id="interests">
     <option value="sports">Sports</option>
     <option value="art">Art</option>
     <option value="music">Music</option>
@@ -43,7 +41,7 @@
   </select></br>
 
   <label for="night">Nightlife:</label><br>
-  <select id="night: ">
+  <select id="night">
     <option value="601_bop">601 Club Night</option>
     <option value="pot_luck_dinner">Potluck Dinners</option>
     <option value="family_pres">Family Pres</option>
@@ -55,12 +53,11 @@
   <label for="alcohol"> Do you drink alcohol?</label><br>
 
   <label for="number_children">Desired number of children in family:</label>
-  <input type="text" name="number_children" pattern="[1-20]" title="number_children" />
+  <input type="text" id="number_children" title="number_children" />
   <br>
 
-  <input type="submit"  value="Submit">
+  <button id="submitButton" onclick="signUp()">Submit</button>
 
-</form>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
