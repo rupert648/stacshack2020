@@ -93,11 +93,11 @@ function swipeRight(){
   //accept parent
   //called on event: swipe right
   if (count < parent_list.length) {
+    let parent_email = parent_list[count].email;
     let parent = parent_list[count++];
     let req = {}
     let user_email = sessionStorage.getItem("user_email");
 
-    let parent_email = sessionStorage.getItem("parent_email");
     //= FROM HTML
     req["request"] = "accept_parent";
     req["user_email"] = user_email;
@@ -144,7 +144,8 @@ function displayParentProfile(parent){
 
 function storeUserLocal(user_info){
     // Store
-    sessionStorage.setItem("user_email", user_info["email"]);
+    console.log(user_info.login_info.email);
+    sessionStorage.setItem("user_email", user_info.login_info.email);
 }
 
 var parent_list = [];
@@ -196,7 +197,7 @@ connection.onmessage = function (e) {
         parent_list = obj["parents_list"];
         // for(const parent of parent_list){
         //   parent_list.next();
-        sessionStorage.setItem("parent_email", parent["email"]);
+        //sessionStorage.setItem("parent_email", parent["email"]);
           // var markup =
         count = 0;
         console.log(document.getElementsByTagName("button"));
