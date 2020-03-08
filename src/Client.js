@@ -161,6 +161,7 @@ connection.onmessage = function (e) {
   switch(obj["response"]) {
     case "html_parents_list":
         document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
+        httpGetScript("\cardswipes.js")
         break;
     // case "html_sign_up":
     //     document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
