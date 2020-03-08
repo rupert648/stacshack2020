@@ -7,11 +7,11 @@ body{
 	background-repeat:  no-repeat;
 	background-attachment: fixed;
 	background-size:  cover;
-	margin: 100px;
-}
+	margin: 10vw;
+ }
 
-.header {
-	width: 460px;
+ .header {
+	width: 80vw;
 	height: 50px;
 	position: relative;
 	background-color: #992E2E;
@@ -29,12 +29,13 @@ body{
 		color: rgb(255, 255, 255);
 		text-shadow: rgb(0, 0, 0) 2px 2px 2px;
 	margin: 0 auto;
-}
+ }
 
 
-.card {
-	width: 460px;
-	height: 1000px;
+
+ .card {
+	width: 80vw;
+	height: 240vw;
 	position: relative;
 	background-color: #992E2E;
 	border-radius: 5px;
@@ -54,21 +55,21 @@ body{
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
+ }
 
-/* Add some padding inside the card container */
-.container {
+ /* Add some padding inside the card container */
+ .container {
   padding: 2px 16px;
-}
-/*Add textbox style*/
-.textbox{
+ }
+ /*Add textbox style*/
+ .textbox{
 	margin-bottom: 25px;
 	padding: 5px;
 	border: 0;
 	background-color: #EAEDED;
 	border-bottom: 2px solid #8E44AD;
 	font-size: 15px;
-}
+ }
 
 	.box .form .button-container {
 		margin: 0 50;
