@@ -7,9 +7,19 @@ const url = 'ws://' + hostname + ':' + port;
 const connection = new WebSocket(url);
 let root = "";
 
+function requestSignUpPage(){
+  httpGet("/profilePageChild.html")
+  // window.open("/profilePageChild.html")
+
+  // var xmlHttp = new XMLHttpRequest();
+  //   xmlHttp.open( "GET", "/profilePageChild.html", false ); // false for synchronous request
+  //   xmlHttp.send( null );
+}
+
+
 
 function signUp(){
-  child_signup_info = {}
+  let child_signup_info = {}
   child_signup_info["request"] = "child_signup";
   child_signup_info["signup_info"] = {
     email : document.getElementById("email").value,
@@ -27,6 +37,7 @@ function signUp(){
   console.log(child_signup_info);
 
   connection.send(JSON.stringify(child_signup_info));
+
 }
 
 
@@ -117,10 +128,12 @@ function userLogin(){
 
 function httpGet(theUrl)
 {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+  xmlHttp.send( null );
+  // window.open(theUrl);
+  document.location = theUrl;
+  return xmlHttp.responseText;
 }
 
 /**
@@ -134,10 +147,14 @@ connection.onmessage = function (e) {
   let obj = JSON.parse(message);
   console.log(obj);
   switch(obj["response"]) {
-    case "html":
+    case "html_parents_list":
         document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
         break;
+    // case "html_sign_up":
+    //     document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
+    //     break;
     case "child_login":
+        // httpGet("/index2.html")
         parent_list = obj["parents_list"];
         // for(const parent of parent_list){
         //   parent_list.next();
