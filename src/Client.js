@@ -92,20 +92,25 @@ let root = "";
 function swipeRight(){
   //accept parent
   //called on event: swipe right
-  let parent = parent_list[count++];
-  let req = {}
-  let user_email = sessionStorage.getItem("user_email");
+  if (count < parent_list.length) {
+    let parent = parent_list[count++];
+    let req = {}
+    let user_email = sessionStorage.getItem("user_email");
 
-  let parent_email = sessionStorage.getItem("parent_email");
-  //= FROM HTML
-  req["request"] = "accept_parent";
-  req["user_email"] = user_email;
-  req["parent_email"] = parent_email;
+    let parent_email = sessionStorage.getItem("parent_email");
+    //= FROM HTML
+    req["request"] = "accept_parent";
+    req["user_email"] = user_email;
+    req["parent_email"] = parent_email;
 
-  displayParentProfile(parent);
-  console.log("swiped right");
-  console.log(req);
-  connection.send(JSON.stringify(req));
+    displayParentProfile(parent);
+    console.log("swiped right");
+    console.log(req);
+
+    connection.send(JSON.stringify(req));
+  } else {
+    console.log("Reached end of list");
+  }
 
 }
 
@@ -114,15 +119,15 @@ function swipeLeft(){
   //called on event: swipe left
 
   //nothing sent to server??
-  console.log("swiped left");
-  let parent = parent_list[count++];
-  displayParentProfile(parent);
+  if (count < parent_list.length) {
+    console.log("swiped left");
+    let parent = parent_list[count++];
+    displayParentProfile(parent);
+  } else {
+    console.log("Reached end of list");
+  }
 
 }
-
-
-
-
 
 
 function displayParentProfile(parent){
@@ -196,7 +201,9 @@ connection.onmessage = function (e) {
         count = 0;
         console.log(document.getElementsByTagName("button"));
 
-        displayParentProfile(parent_list[count++]);
+        if (count < parent_list.length) {
+          displayParentProfile(parent_list[count++]);
+        }
         document.getElementsByTagName("button")[0].setAttribute("onclick", "swipeLeft()");
 
         document.getElementsByTagName("button")[1].setAttribute("onclick", "swipeRight()");
