@@ -163,6 +163,11 @@ connection.onmessage = function (e) {
         document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
         // httpGetScript("\cardswipes.js")
         break;
+    case "parent_login":
+      console.log("parent login");
+      document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
+      // httpGetScript("\cardswipes.js")
+      break;
     // case "html_sign_up":
     //     document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
     //     break;
