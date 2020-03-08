@@ -93,21 +93,28 @@ function swipeRight(){
   //accept parent
   //called on event: swipe right
   let req = {}
-  let user_email = sessionStorage.getItem("email");
+  let user_email = sessionStorage.getItem("user_email");
 
-  let parent_email
+  let parent_email = sessionStorage.getItem("parent_email");
   //= FROM HTML
+  req["request"] = "accept_parent";
   req["user_email"] = user_email;
   req["parent_email"] = parent_email;
 
+  displayParentProfile(parents_list.next());
+
   connection.send(JSON.stringify(req));
+
 }
 
-function swipeLeft(){
+function swipeLeft(parent_list){
   //reject parent
   //called on event: swipe left
 
   //nothing sent to server??
+
+  displayParentProfile(parents_list.next());
+
 }
 
 
@@ -176,11 +183,17 @@ connection.onmessage = function (e) {
     document.close();
     let parent_list = obj["parents_list"];
 
-    for(const parent of parent_list){
+    // for(const parent of parent_list){
+    //   parent_list.next();
+    sessionStorage.setItem("parent_email", parent["email"]);
       // var markup =
-      displayParentProfile(parent);
+    displayParentProfile(parent_list.next());
+    document.getElementsByClassName("but-yep").addEventListener("click", swipeRight(parent_list))
+
+    document.getElementsByClassName("but-nope").addEventListener("click", swipeLeft(parent_list))
+
       // document.getElementsById("card").innerHTML = markup
-    }
+    // }
     //
     // displayParentProfile(parent_list);
     // document.getElementsById("card").innerHTML = markup //CHANGE TAGNAME
