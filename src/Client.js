@@ -6,7 +6,6 @@ let port = window.location.port;
 const url = 'ws://' + hostname + ':' + port;
 const connection = new WebSocket(url);
 let root = "";
-let count = 0;
 
 
 
@@ -90,9 +89,10 @@ let count = 0;
 
 
 
-function swipeRight(parent){
+function swipeRight(){
   //accept parent
   //called on event: swipe right
+  let parent = parent_list[count++];
   let req = {}
   let user_email = sessionStorage.getItem("user_email");
 
@@ -103,17 +103,19 @@ function swipeRight(parent){
   req["parent_email"] = parent_email;
 
   displayParentProfile(parent);
-
+  console.log("swiped right");
+  console.log(req);
   connection.send(JSON.stringify(req));
 
 }
 
-function swipeLeft(parent){
+function swipeLeft(){
   //reject parent
   //called on event: swipe left
 
   //nothing sent to server??
-
+  console.log("swiped left");
+  let parent = parent_list[count++];
   displayParentProfile(parent);
 
 }
@@ -140,6 +142,8 @@ function storeUserLocal(user_info){
     sessionStorage.setItem("user_email", user_info["email"]);
 }
 
+var parent_list = [];
+var count = 0;
 
 function userLogin(){
   //called on click of login button
@@ -178,17 +182,13 @@ connection.onmessage = function (e) {
   let message = e.data;
 
   let obj = JSON.parse(message);
+  console.log(obj);
   switch(obj["response"]) {
+    case "html":
+        document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
+        break;
     case "child_login":
-      let promise = new Promise ((resolve, reject) => {
-        let result = httpGet("/index2.html");
-        resolve(result);
-      });
-      promise.then((result) => {
-        document.open();
-        document.write(result);
-
-        let parent_list = obj["parents_list"];
+        parent_list = obj["parents_list"];
         // for(const parent of parent_list){
         //   parent_list.next();
         sessionStorage.setItem("parent_email", parent["email"]);
@@ -197,13 +197,10 @@ connection.onmessage = function (e) {
         console.log(document.getElementsByTagName("button"));
 
         displayParentProfile(parent_list[count++]);
-        document.getElementsByTagName("button")[0].addEventListener("click", swipeRight(parent_list[count++]));
+        document.getElementsByTagName("button")[0].setAttribute("onclick", "swipeLeft()");
 
-        document.getElementsByTagName("button")[1].addEventListener("click", swipeLeft(parent_list[count++]));
-      }, (reject) => {
-        console.log("error");
-      });
-      break;
+        document.getElementsByTagName("button")[1].setAttribute("onclick", "swipeRight()");
+        break;
   }
       // document.getElementsById("card").innerHTML = markup
     // }
