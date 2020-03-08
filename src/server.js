@@ -20,6 +20,72 @@ let db = new sqlite3.Database('../database/stacshack2020.db', sqlite3.OPEN_READW
 });
 
 
+var index2 = `
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+  <meta charset="utf-8">
+  <title>Cardswipe Test</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="cardswipes.css">
+  <link rel="stylesheet" type="text/css" href="swipecard.css">
+
+</head>
+
+<body>
+  <header>
+    <h1>Raisin A Family</h1>
+  </header>
+  <section>
+    <div class="cardcontainer list" id="card">
+
+      <!-- <ul class="cardlist"> -->
+        <!-- <li class="card current"><img src="images/photo1.png" alt="card1"></li> -->
+        <!-- <li class="card"><img src="images/photo2.jpg" alt="card2"></li>
+        <li class="card"><img src="images/photo3.png" alt="card3"></li>
+        <li class="card"><img src="images/photo4.jpeg" alt="card4"></li>
+        <li class="card"><img src="images/photo5.png" alt="card5"></li>
+        <li class="card"><img src="images/photo1.jpg" alt="card6"></li>
+        <li class="card"><img src="images/photo1.png" alt="card7"></li>
+        <li class="card"><img src="images/photo1.jpeg" alt="card8"></li>
+        <li class="card"><img src="images/photo1.png" alt="card9"></li>
+        <li class="card"><img src="images/photo1.png" alt="card10"></li> -->
+      <!-- </ul> -->
+
+      <ul class="card current" id="current_card">
+        <li><img id="card_image" src="images/photo1.png" alt="card1"></li>
+        <li id="Criteria 1">Criteria 1</li>
+        <li id="Criteria 2">Criteria 2</li>
+        <li id="Criteria 3">Criteria 3</li>
+        <li id="Criteria 4">Criteria 4</li>
+        <li id="Criteria 5">Criteria 5</li>
+
+
+      </ul>
+
+
+
+      <button id="but-nope">X</button>
+      <button id="but-yay">✔</button>
+      <span id="counter"></span>
+    </div>
+    <ul class="cardlist" id="results">
+    </ul>
+  </section>
+
+
+  <!-- <script src="cardswipes.js"></script>
+  <script src="swipecard.js"></script> -->
+  <script src="Client.js"></script>
+
+</body>
+
+</html>
+`;
+
 ///////////////////////////////Starting the server ////////////////////////
 
 //function to take HTTP requests from the client
@@ -188,6 +254,7 @@ wss.on('connection', (ws) => {
                     for (let i = 0 ; i  < result.length ; i++) {
                       console.log(result[i]);
                     }
+                    ws.send(convertToJson("html", index2));
                     ws.send(convertToJson("child_login", result));
                   }, (error) => {
                     console.log(error);
