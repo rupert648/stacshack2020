@@ -37,8 +37,11 @@
 }
 
 img {
-  max-width:95%;
-  height:auto;
+  /* max-width:95%;
+  height:auto; */
+  width: 50vw;
+  height: 50vw;
+  padding-left: 7vw;
 }
 
 li{
