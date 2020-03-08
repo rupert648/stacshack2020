@@ -30,7 +30,7 @@ function serveApp(request, response) {
       //response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
       fs.readFile("../LogIn_Page2/index.html", function (error, data) {
-        console.log("got here");
+        console.log("got to login");
         if (error) {
           response.writeHead(500)
           response.end("Error loading script")
@@ -71,6 +71,7 @@ function serveApp(request, response) {
       });
       break;
     case "/index2.html":
+      console.log("GET REQUEST: index2.html")
       fs.readFile("../front-end/index2.html", function (error, data) {
         if (error) {
           response.writeHead(500)
@@ -78,7 +79,7 @@ function serveApp(request, response) {
         } else {
           //send javascript to the client
           response.writeHead(200, {"Content-Type": "text/html"});
-          response.end(data)
+          response.end(data);
         }
       });
       break;
@@ -203,6 +204,9 @@ wss.on('connection', (ws) => {
               }
             });
 
+            break;
+          case "accept_parent":
+            console.log(request);
             break;
 
         }

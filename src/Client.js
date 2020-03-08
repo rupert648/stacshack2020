@@ -1,5 +1,6 @@
 "use strict";
 
+
 let hostname = window.location.hostname;
 let port = window.location.port;
 const url = 'ws://' + hostname + ':' + port;
@@ -89,7 +90,7 @@ let count = 0;
 
 
 
-function swipeRight(){
+function swipeRight(parent){
   //accept parent
   //called on event: swipe right
   let req = {}
@@ -101,19 +102,19 @@ function swipeRight(){
   req["user_email"] = user_email;
   req["parent_email"] = parent_email;
 
-  displayParentProfile(parents_list.next());
+  displayParentProfile(parent);
 
   connection.send(JSON.stringify(req));
 
 }
 
-function swipeLeft(parent_list){
+function swipeLeft(parent){
   //reject parent
   //called on event: swipe left
 
   //nothing sent to server??
 
-  displayParentProfile(parents_list.next());
+  displayParentProfile(parent);
 
 }
 
@@ -177,21 +178,33 @@ connection.onmessage = function (e) {
   let message = e.data;
 
   let obj = JSON.parse(message);
-  if (obj["response"] == "child_login") {
-    document.open();
-    document.write(httpGet("/index2.html"));
-    document.close();
-    let parent_list = obj["parents_list"];
+  switch(obj["response"]) {
+    case "child_login":
+      let promise = new Promise ((resolve, reject) => {
+        let result = httpGet("/index2.html");
+        resolve(result);
+      });
+      promise.then((result) => {
+        document.open();
+        document.write(result);
 
-    // for(const parent of parent_list){
-    //   parent_list.next();
-    sessionStorage.setItem("parent_email", parent["email"]);
-      // var markup =
-    displayParentProfile(parent_list.next());
-    document.getElementsByClassName("but-yep").addEventListener("click", swipeRight(parent_list))
+        let parent_list = obj["parents_list"];
+        // for(const parent of parent_list){
+        //   parent_list.next();
+        sessionStorage.setItem("parent_email", parent["email"]);
+          // var markup =
+        count = 0;
+        console.log(document.getElementsByTagName("button"));
 
-    document.getElementsByClassName("but-nope").addEventListener("click", swipeLeft(parent_list))
+        displayParentProfile(parent_list[count++]);
+        document.getElementsByTagName("button")[0].addEventListener("click", swipeRight(parent_list[count++]));
 
+        document.getElementsByTagName("button")[1].addEventListener("click", swipeLeft(parent_list[count++]));
+      }, (reject) => {
+        console.log("error");
+      });
+      break;
+  }
       // document.getElementsById("card").innerHTML = markup
     // }
     //
@@ -201,6 +214,6 @@ connection.onmessage = function (e) {
     //send another user list request to server?
     //would need to track users already viewed?
     //set page to display "no more parent profiles to view please come back later"
-  }
+
   //error??
 };
