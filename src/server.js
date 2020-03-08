@@ -338,7 +338,7 @@ wss.on('connection', (ws) => {
           case "accept_parent":
             console.log(request);
 
-            db.run(`INSERT INTO children(parent_email VALUES(?) WHERE children.email = VALUES(?)`, [request.parent_email, request.user_email], function(err) {
+            db.run(`INSERT INTO children(parent_email VALUES(?) WHERE children.email = `+request.user_email+";", [request.parent_email], function(err) {
                     if (err) {
                       return console.log(err.message);
                     }
