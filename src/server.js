@@ -19,33 +19,6 @@ let db = new sqlite3.Database('../database/stacshack2020.db', sqlite3.OPEN_READW
   console.log('Connected to the in-memory SQlite database.');
 });
 
-//use this to generate the html for the html file we first send out.
-function generateHTML(markup) {
-  //this contains the default html to send to the server.
-  let header = `
-  <!DOCTYPE html>
-  <html>
-
-  <head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="style.css" type="text/css" />
-  <title>Example Web Page for CS2003 Web2</title>
-  </head>
-
-  <body>
-
-  <h1>STACSHACK</h1>
-  <hr />
-  `;
-  let footer = `
-  <script src="client.js"></script>
-  </body>
-  </html>
-  `;
-
-  return header+footer;
-}
-
 
 ///////////////////////////////Starting the server ////////////////////////
 
@@ -87,6 +60,42 @@ function serveApp(request, response) {
     case "/style.css": //CSS
       //try and read our CSS file
       fs.readFile("../LogIn_Page2/style.css", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading css")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/css"});
+          response.end(data)
+        }
+      });
+      break;
+    case "/index2.html":
+      fs.readFile("../front-end/index2.html", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading main page")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/html"});
+          response.end(data)
+        }
+      });
+      break;
+    case "/cardswipes.css":
+      fs.readFile("../front-end/cardswipes.css", function (error, data) {
+        if (error) {
+          response.writeHead(500)
+          response.end("Error loading css")
+        } else {
+          //send javascript to the client
+          response.writeHead(200, {"Content-Type": "text/css"});
+          response.end(data)
+        }
+      });
+      break;
+    case "/swipecard.css":
+      fs.readFile("../front-end/swipecard.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
@@ -168,14 +177,20 @@ wss.on('connection', (ws) => {
                 return console.error(err.message);
               }
               if (row) {
+                console.log(JSON.stringify(row));
                 // correct password
                 if (row.password === passwrd) {
                   console.log("we're in");
                   let response = getMatches(row);
-                  for (let i = 0 ; i  < response.length ; i++) {
-                    console.log(response[i]);
-                  }
-                  ws.send(convertToJson("child_login", response));
+                  response.then((result) => {
+                    console.log(result.length);
+                    for (let i = 0 ; i  < result.length ; i++) {
+                      console.log(result[i]);
+                    }
+                    ws.send(convertToJson("child_login", result));
+                  }, (error) => {
+                    console.log(error);
+                  });
                 }
                 // incorrect password
                 else {
@@ -203,13 +218,13 @@ let getMatches = function(childRow) {
   let bestMatches = [];  //length 50, type row objects
 
   let sql = 'SELECT * FROM parents'
-  db.all(sql, [], (err, parentRows) => {
+  let promise = new Promise((resolve, reject) => {
+    db.all(sql, [], (err, parentRows) => {
     if (err) {
       throw err;
+      reject(Error("sql query failed"));
     }
-    console.log("reach parent rows");
     parentRows.forEach((parentRow) => {
-      console.log("working on " + parentRow.userID);
       let count = 0;
 
       count = (parentRow.department == childRow.department ? count+1: count);
@@ -219,7 +234,6 @@ let getMatches = function(childRow) {
       count = (parentRow.night == childRow.night ? count+1: count);
 
       parentRow.metric = count;
-      console.log("at best matches");
       if (bestMatches.length < 50) {
         bestMatches.push(parentRow);
       } else {
@@ -230,14 +244,11 @@ let getMatches = function(childRow) {
           }
         }
       }
-
     });
+    resolve(bestMatches);
   });
-  console.log(bestMatches.length);
-  for (let i = 0 ; i  < bestMatches.length ; i++) {
-    console.log(bestMatches[i]);
-  }
-  return bestMatches;
+});
+  return promise;
 }
 //
 // wss.onclose = function(event){

@@ -153,6 +153,14 @@ function userLogin(){
   connection.send(JSON.stringify(user_login_info));
 }
 
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
 /**
  * Callback for a message received from server.
  * Parses JSON string from server to a JS object.
@@ -160,19 +168,22 @@ function userLogin(){
  */
 connection.onmessage = function (e) {
   let message = e.data;
+  document.open();
+  document.write(httpGet("/index2.html"));
+  document.close();
   let obj = JSON.parse(message);
   if (obj["response"] == "child_login") {
     let parent_list = obj["parents_list"];
-    
+
     for(const parent of parent_list){
-      // var markup = 
+      // var markup =
       displayParentProfile(parent);
       // document.getElementsById("card").innerHTML = markup
     }
-    //  
+    //
     // displayParentProfile(parent_list);
     // document.getElementsById("card").innerHTML = markup //CHANGE TAGNAME
-    
+
     //send another user list request to server?
     //would need to track users already viewed?
     //set page to display "no more parent profiles to view please come back later"
