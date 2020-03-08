@@ -1,43 +1,51 @@
 /* Card design */
 .card {
-  font-size: 14px;
-  line-height: 50px;
+  font-size: 5vw;
+  line-height: 5vw;
   text-align:center;
-  width: 150px;
-  height: 200px;
+  width: 300vw;
+  height: 250vw;
   display: block;
-  background: #477998;
-  -webkit-transform-origin: 50% 99%;
-  transform-origin: 50% 99%;
+  background: #A31621;
+  padding: 3vw;
 }
 .cardcontainer {
   text-align: center;
   width: 150vw;
-  align-items: center;
-
 }
+
 
 /* List functionality */
 .list .cardlist {
   margin: 0;
   align-items: center;
+  list-style-type: none;
 }
 
 .list .card {
   display: none;
   margin: 0;
+  list-style-type: none;
 }
 
 .list .current {
   display: block;
   margin: 0;
   align-items: center;
+  list-style-type: none;
 
 }
 
 img {
-  width: 100%;
-  height: 100%;
+  /* max-width:95%;
+  height:auto; */
+  width: 50vw;
+  height: 50vw;
+  padding-left: 7vw;
+}
+
+li{
+  margin: 4vw 0;
 }
 
 
@@ -45,23 +53,25 @@ img {
 
 button {
   background: #0c0;
-  border: none;
+  border-style: solid;
+  border-color: white;
   color: #fff;
   border-radius: 50% 50%;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  margin: 0 1.9em;
+  width: 15vw;
+  height: 15vw;
+  line-height: 15vw;
+  margin: 8vw;
   display: inline-block;
+  font-size: 10vw;
 }
 button:focus {
   outline: 0;
   background: #0f0;
 }
-.but-nope {
+#but-nope {
   background: #c00;
 }
-.but-nope:focus {
+#but-nope:focus {
   outline: 0;
   background: #f00;
 }

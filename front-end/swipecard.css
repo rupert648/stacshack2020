@@ -1,11 +1,20 @@
 body {
   font-family: Luminari, fantasy;
-  background: #461220;
+  background: #51A5C5;
   color: #FFFCF2;
   font-size: 5vw;
   padding: 0;
   margin: 0;
+  
 }
+
+h1{
+  color:  #FFFCF2
+  font-size: 24vw;
+  font-weight: normal;
+  text-align: center;
+}
+
 header, section, footer {
   display: block;
   padding: 0.5em 1em;
@@ -15,9 +24,10 @@ header, footer {
   background: linear-gradient(#111,#000);
 }
 header{
-  background: #157715;
+  background: #A31621;
 
 }
+<<<<<<< HEAD
 a {color: lime;}
 h1 {
   color:  #FFFCF2;
@@ -27,28 +37,31 @@ h1 {
 }
 
   align-items: c
+=======
+>>>>>>> 0666475abdd43061fc72478726c66800cee124ae
 
 footer {
   background: transparent;
   clear: both;
   font-size: 10px;
   text-align: center;
-  padding: 3em 0.5em 1em 0.5em;
+  padding: 10vw;
 }
 .card {
-  color: #000;
-  width: 50vw;
-  height: 80vw;
+  color: #white;
+  width: 65vw;
+  height: 100vw;
 }
 .cardcontainer {
-  width: 250px;
+  width: 70vw;
   position: relative;
   overflow: hidden;
   margin: 0 auto;
+  padding-top:10vw;
 }
 .list ul.cardlist {
   margin: 0 0 10px 0;
-  height: 300px;
+  height: 300vw;
 }
 img {display: block;}
 .but-nope::after {
