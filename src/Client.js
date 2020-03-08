@@ -8,7 +8,8 @@ const connection = new WebSocket(url);
 let root = "";
 
 function requestSignUpPage(){
-  httpGet("/profilePageChild.html")
+  httpGetHTML("/profilePageChild.html");
+  httpGetScript("/Client.js");
   // window.open("/profilePageChild.html")
 
   // var xmlHttp = new XMLHttpRequest();
@@ -127,13 +128,23 @@ function userLogin(){
   connection.send(JSON.stringify(user_login_info));
 }
 
-function httpGet(theUrl)
+function httpGetHTML(theUrl)
 {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
   xmlHttp.send( null );
   // window.open(theUrl);
   document.location = theUrl;
+  return xmlHttp.responseText;
+}
+
+function httpGetScript(theUrl)
+{
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+  xmlHttp.send( null );
+  // window.open(theUrl);
+  
   return xmlHttp.responseText;
 }
 
