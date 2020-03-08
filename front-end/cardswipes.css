@@ -59,6 +59,7 @@ button {
   line-height: 15vw;
   margin: 8vw;
   display: inline-block;
+  font-size: 10vw;
 }
 button:focus {
   outline: 0;
