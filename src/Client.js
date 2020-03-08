@@ -168,11 +168,12 @@ function httpGet(theUrl)
  */
 connection.onmessage = function (e) {
   let message = e.data;
-  document.open();
-  document.write(httpGet("/index2.html"));
-  document.close();
+
   let obj = JSON.parse(message);
   if (obj["response"] == "child_login") {
+    document.open();
+    document.write(httpGet("/index2.html"));
+    document.close();
     let parent_list = obj["parents_list"];
 
     for(const parent of parent_list){
