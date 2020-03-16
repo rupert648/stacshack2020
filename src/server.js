@@ -24,8 +24,6 @@ var index2 = `
 <!DOCTYPE html>
 <html>
 
-
-
 <head>
   <meta charset="utf-8">
   <title>Cardswipe Test</title>
@@ -181,7 +179,7 @@ function serveApp(request, response) {
       //send the HTML
       //response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
-      fs.readFile("../LogIn_Page2/index.html", function (error, data) {
+      fs.readFile("../front-end/LogIn_Page2/index.html", function (error, data) {
         console.log("got to login");
         if (error) {
           response.writeHead(500)
@@ -199,7 +197,7 @@ function serveApp(request, response) {
       //send the HTML
       //response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
-      fs.readFile("../Profile_Page_Child/profilePageChild.html", function (error, data) {
+      fs.readFile("../front-end/Profile_Page_Child/profilePageChild.html", function (error, data) {
         console.log("got to child signup");
         if (error) {
           response.writeHead(500)
@@ -215,7 +213,7 @@ function serveApp(request, response) {
 
     case "/profilePageChild.css": //CSS
       //try and read our CSS file
-      fs.readFile("../Profile_Page_Child/profilePageChild.css", function (error, data) {
+      fs.readFile("../front-end/Profile_Page_Child/profilePageChild.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
@@ -231,7 +229,7 @@ function serveApp(request, response) {
       //send the HTML
       //response.writeHead(200, {"Content-Type": "text/html"});
       // we generate some default markup to send just in case first request fails.
-      fs.readFile("../Profile_Page_Parent/profilePageParent.html", function (error, data) {
+      fs.readFile("../front-end/Profile_Page_Parent/profilePageParent.html", function (error, data) {
         console.log("got to parent signup");
         if (error) {
           response.writeHead(500)
@@ -247,7 +245,7 @@ function serveApp(request, response) {
 
     case "/profilePageParent.css": //CSS
       //try and read our CSS file
-      fs.readFile("../Profile_Page_Parent/profilePageParent.css", function (error, data) {
+      fs.readFile("../front-end/Profile_Page_Parent/profilePageParent.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
@@ -274,7 +272,7 @@ function serveApp(request, response) {
       break;
     case "/carswipes.js":  //JS
       //try and read our client side javascript file.
-      fs.readFile("../front-end/cardswipes.js", function (error, data) {
+      fs.readFile("../front-end/front-end/cardswipes.js", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading script")
@@ -286,7 +284,7 @@ function serveApp(request, response) {
       });
     case "/style.css": //CSS
       //try and read our CSS file
-      fs.readFile("../LogIn_Page2/style.css", function (error, data) {
+      fs.readFile("../front-end/LogIn_Page2/style.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
