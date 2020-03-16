@@ -138,8 +138,8 @@ function httpGetHTML(theUrl)
   return xmlHttp.responseText;
 }
 
-function httpGetScript(theUrl)
-{
+function httpGetScript(theUrl) {
+  console.log("sending request for: "+theUrl);
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
   xmlHttp.send( null );
@@ -157,12 +157,13 @@ connection.onmessage = function (e) {
   let message = e.data;
 
   let obj = JSON.parse(message);
-  console.log(obj);
   switch(obj["response"]) {
-    case "html_parents_list":
-        document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
-        // httpGetScript("\cardswipes.js")
-        break;
+    // case "html_parents_list":
+    // console.log("AHHHHHHHHHHHHHH");
+    //     console.log(obj);
+    //     document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
+    //     // httpGetScript("\cardswipes.js")
+    //     break;
     case "parent_login":
       console.log("parent login");
       document.getElementsByTagName("html")[0].innerHTML = obj["parents_list"];
@@ -174,6 +175,8 @@ connection.onmessage = function (e) {
     case "child_login":
         // httpGet("/index2.html")
         parent_list = obj["parents_list"];
+        document.getElementsByTagName("html")[0].innerHTML = obj["html"];
+        //httpGetHTML("/index2.html");
         // for(const parent of parent_list){
         //   parent_list.next();
         //sessionStorage.setItem("parent_email", parent["email"]);
@@ -188,14 +191,14 @@ connection.onmessage = function (e) {
 
         document.getElementsByTagName("button")[1].setAttribute("onclick", "swipeRight()");
         break;
-        case "bad_login":
-          //error
-          alert("Bad login attempt, try changing email or user name");
-          break;
-        case "bad_signup":
-          //error
-          alert("Bad signup attempt, please check your details are correct and you are using a University of St Andrews email address");
-          break;
+      case "bad_login":
+        //error
+        alert("Bad login attempt, try changing email or user name");
+        break;
+      case "bad_signup":
+        //error
+        alert("Bad signup attempt, please check your details are correct and you are using a University of St Andrews email address");
+        break;
   }
       // document.getElementsById("card").innerHTML = markup
     // }

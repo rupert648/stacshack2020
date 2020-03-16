@@ -19,71 +19,6 @@ let db = new sqlite3.Database('../database/stacshack2020.db', sqlite3.OPEN_READW
   console.log('Connected to the in-memory SQlite database.');
 });
 
-
-var index2 = `
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>Cardswipe Test</title>
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" type="text/css" href="cardswipes.css">
-  <link rel="stylesheet" type="text/css" href="swipecard.css">
-
-</head>
-
-<body>
-  <header>
-    <h1>Raisin A Family</h1>
-  </header>
-  <section>
-    <div class="cardcontainer list" id="card">
-
-      <!-- <ul class="cardlist"> -->
-        <!-- <li class="card current"><img src="images/photo1.png" alt="card1"></li> -->
-        <!-- <li class="card"><img src="images/photo2.jpg" alt="card2"></li>
-        <li class="card"><img src="images/photo3.png" alt="card3"></li>
-        <li class="card"><img src="images/photo4.jpeg" alt="card4"></li>
-        <li class="card"><img src="images/photo5.png" alt="card5"></li>
-        <li class="card"><img src="images/photo1.jpg" alt="card6"></li>
-        <li class="card"><img src="images/photo1.png" alt="card7"></li>
-        <li class="card"><img src="images/photo1.jpeg" alt="card8"></li>
-        <li class="card"><img src="images/photo1.png" alt="card9"></li>
-        <li class="card"><img src="images/photo1.png" alt="card10"></li> -->
-      <!-- </ul> -->
-
-      <ul class="card current" id="current_card">
-        <li><img id="card_image" src="images/photo1.png" alt="card1"></li>
-        <li id="Criteria 1">Criteria 1</li>
-        <li id="Criteria 2">Criteria 2</li>
-        <li id="Criteria 3">Criteria 3</li>
-        <li id="Criteria 4">Criteria 4</li>
-        <li id="Criteria 5">Criteria 5</li>
-
-
-      </ul>
-
-
-
-      <button id="but-nope">X</button>
-      <button id="but-yay">✔</button>
-      <span id="counter"></span>
-    </div>
-    <ul class="cardlist" id="results">
-    </ul>
-  </section>
-
-
-  <!-- <script src="cardswipes.js"></script>
-  <script src="swipecard.js"></script> -->
-  <script src="Client.js"></script>
-
-</body>
-
-</html>
-`;
-
 var parent_html = `
 <!DOCTYPE html>
 <html>
@@ -259,7 +194,7 @@ function serveApp(request, response) {
 
     case "/Client.js":  //JS
     //try and read our client side javascript file.
-      fs.readFile(__dirname + "/Client.js", function (error, data) {
+      fs.readFile("../front-end/LogIn_Page2/Client.js", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading script")
@@ -272,7 +207,7 @@ function serveApp(request, response) {
       break;
     case "/carswipes.js":  //JS
       //try and read our client side javascript file.
-      fs.readFile("../front-end/front-end/cardswipes.js", function (error, data) {
+      fs.readFile("../front-end/child_cardPage/cardswipes.js", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading script")
@@ -297,37 +232,49 @@ function serveApp(request, response) {
       break;
     case "/index2.html":
       console.log("GET REQUEST: index2.html")
-      fs.readFile("../front-end/index2.html", function (error, data) {
+      fs.readFile("../front-end/child_cardPage/index2.html", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading main page")
         } else {
-          //send javascript to the client
+          //send html to the client
           response.writeHead(200, {"Content-Type": "text/html"});
           response.end(data);
         }
       });
       break;
     case "/cardswipes.css":
-      fs.readFile("../front-end/cardswipes.css", function (error, data) {
+      fs.readFile("../front-end/child_cardPage/cardswipes.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
         } else {
-          //send javascript to the client
+          //send css to the client
           response.writeHead(200, {"Content-Type": "text/css"});
           response.end(data)
         }
       });
       break;
     case "/swipecard.css":
-      fs.readFile("../front-end/swipecard.css", function (error, data) {
+      fs.readFile("../front-end/child_cardPage/swipecard.css", function (error, data) {
         if (error) {
           response.writeHead(500)
           response.end("Error loading css")
         } else {
-          //send javascript to the client
+          //send css to the client
           response.writeHead(200, {"Content-Type": "text/css"});
+          response.end(data)
+        }
+      });
+      break;
+    case "cardJS.js":
+      console.log("sending cardJS.js");
+      fs,readFile("../front-end/child_cardPage/cardJS.js", function(error, data) {
+        if (error) {
+          response.writeHead(500);
+          response.end("Error loading css");
+        } else {
+          response.writeHead(200, {"Content-Type": "text/script"});
           response.end(data)
         }
       });
@@ -341,8 +288,13 @@ const httpserver = HTTP.createServer(serveApp).listen(port, os.hostname);
 //websocket server
 const wss = new ws.Server({ server: httpserver });
 
-function convertToJson(responseType, parent_list) {
-  let reply = {response: responseType, parents_list: parent_list};
+function convertToJson(responseType, parent_list, html) {
+  let reply;
+  if(html) {
+    reply = {response: responseType, parents_list: parent_list, html:html};
+  } else {
+    reply = {response: responseType, parents_list: parent_list};
+  }
   let JsonReply = JSON.stringify(reply); // convert to JSON
   return JsonReply;
 }
@@ -354,130 +306,19 @@ wss.on('connection', (ws) => {
     ws.on('message', (message) => {
         //message is a JSON string
         //parse it to a Javascript object
-        console.log(message);
         let request = JSON.parse(message);
         switch(request["request"]) {
           case "child_signup":
-            console.log("received child_signup")
-            console.log(request)
-              //put into db
-            let signup_info = request["signup_info"];
-            let email = signup_info["email"];
-            let email_regex = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@st-andrews.ac.uk");
-            if (!email.match(email_regex)) {
-              ws.send(convertToJson("error", "email"));
-            }
-            let userID = email.split("@")[0];
-            let password = signup_info["password"];
-            let name = signup_info["name"];
-            let photo = signup_info["photo"];
-            let department = signup_info["department"];
-            let alcohol = signup_info["alcohol"];
-            let interests = signup_info["interests"];
-            let numb_child = signup_info["number_children"];
-            let night = signup_info["night"];
 
-
-
-            //table - email | password | name | photo | department | alcohol | interestes | numb_child | night
-
-            db.run(`INSERT INTO children(password, email, userID, name, photo, department, alcohol, interests, numb_child, night) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                  [password, email, userID, name, photo, department, alcohol, interests, numb_child, night], function(err) {
-                    if (err) {
-                      return console.log(err.message);
-                    }
-
-                    console.log("A row has been inserted with the values:");
-                    console.log(JSON.stringify(signup_info));
-                    console.log("with rowid ${this.lastID}")
-                    let sql = 'SELECT * FROM children WHERE children.email = ?';
-                    db.get(sql, [email], (err, row) => {
-                      if (err) {
-                        return console.error(err.message);
-                      }
-                      if (row) {
-                        console.log(JSON.stringify(row));
-                        // correct password
-                        if (row.password === password) {
-                          console.log("we're in");
-                          let response = getMatches(row);
-                          response.then((result) => {
-                            console.log(result.length);
-                            for (let i = 0 ; i  < result.length ; i++) {
-                              console.log(result[i]);
-                            }
-                            ws.send(convertToJson("html_parents_list", index2));
-                            ws.send(convertToJson("child_login", result));
-                          }, (error) => {
-                            console.log(error);
-                          });
-                        }
-                        // incorrect password
-                        else {
-                          ws.send(convertToJson("bad_login", "incorrect password"));
-                        }
-                      }
-                  });
-                });
-
+            signupChild(request, ws);
             break;
 
           case "child_login":
             let login_info = request["login_info"];
             let email2 = login_info["email"];
-            let passwrd = login_info["password"];
+            let password2 = login_info["password"];
 
-            let sql = 'SELECT * FROM children WHERE children.email = ?'
-            db.get(sql, [email2], (err, row) => {
-              if (err) {
-                return console.error(err.message);
-              }
-              if (row) {
-                console.log(JSON.stringify(row));
-                // correct password
-                if (row.password === passwrd) {
-                  console.log("we're in");
-                  let response = getMatches(row);
-                  response.then((result) => {
-                    console.log(result.length);
-                    for (let i = 0 ; i  < result.length ; i++) {
-                      console.log(result[i]);
-                    }
-                    ws.send(convertToJson("html_parents_list", index2));
-                    ws.send(convertToJson("child_login", result));
-                  }, (error) => {
-                    console.log(error);
-                  });
-                }
-              }
-                // parent login
-              else {
-                console.log("logging in parent");
-                let s = 'SELECT * FROM parents WHERE parents.email = ?';
-                db.get(s, [email2], (er, r) => {
-                  if (er) {
-                    return console.error(er.message);
-                  }
-                  if (r) {
-                    console.log("parent login");
-                    ws.send(convertToJson("parent_login", parent_html));
-                    console.log(JSON.stringify(r));
-                    // correct password
-                    if (r.password === passwrd) {
-                        ws.send(convertToJson("parent_login", parent_html));
-                    }
-                    else {
-                      ws.send(convertToJson("bad_login", "incorrect password"));
-                    }
-                    // incorrect password
-                  }
-                  // no user in database
-                  else {
-                    ws.send(convertToJson("bad_login", "no user"));
-                  }
-                });
-              }
-            });
+            login(ws, email2, password2);
             break;
           case "accept_parent":
             console.log(request);
@@ -544,17 +385,109 @@ let getMatches = function(childRow) {
 });
   return promise;
 }
-//
-// wss.onclose = function(event){
-//
-//
-// });
+
+let signupChild = function(request, ws) {
+  console.log("received child_signup")
+  console.log(request)
+    //put into db
+  let signup_info = request["signup_info"];
+  let email = signup_info["email"];
+  let email_regex = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@st-andrews.ac.uk");
+  if (!email.match(email_regex)) {
+    ws.send(convertToJson("error", "email"));
+  }
+  let userID = email.split("@")[0];
+  let password = signup_info["password"];
+  let name = signup_info["name"];
+  let photo = signup_info["photo"];
+  let department = signup_info["department"];
+  let alcohol = signup_info["alcohol"];
+  let interests = signup_info["interests"];
+  let numb_child = signup_info["number_children"];
+  let night = signup_info["night"];
+
+
+
+  //table - email | password | name | photo | department | alcohol | interestes | numb_child | night
+
+  db.run(`INSERT INTO children(password, email, userID, name, photo, department, alcohol, interests, numb_child, night) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [password, email, userID, name, photo, department, alcohol, interests, numb_child, night], function(err) {
+          if (err) {
+            return console.log(err.message);
+          }
+
+          console.log("A row has been inserted with the values:");
+          console.log(JSON.stringify(signup_info));
+          console.log("with rowid ${this.lastID}")
+
+          login(ws, email, password);
+
+
+    });
+}
+
+let login = function(ws, email, password) {
+  let sql = 'SELECT * FROM children WHERE children.email = ?';
+  db.get(sql, [email], (err, row) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    if (row) {
+      console.log(JSON.stringify(row));
+      // correct password
+      if (row.password === password) {
+        let response = getMatches(row);
+        response.then((result) => {
+          console.log(result.length);
+          // for (let i = 0 ; i  < result.length ; i++) {
+          //   console.log(result[i]);
+          // }
+          fs.readFile("../front-end/child_cardPage/index2.html", function (error, data) {
+            if (error) {
+              console.log(error);
+            } else {
+              //send javascript to the client
+              const content = data
+              console.log(content.toString('utf8'));
+
+              ws.send(convertToJson("child_login", result, content.toString('utf8')));
+            }
+          });
+          //ws.send(convertToJson("child_login", result));
+        }, (error) => {
+          console.log(error);
+        });
+      }
+    }
+      // parent login
+    else {
+      console.log("logging in parent");
+      let s = 'SELECT * FROM parents WHERE parents.email = ?';
+      db.get(s, [email2], (er, r) => {
+        if (er) {
+          return console.error(er.message);
+        }
+        if (r) {
+          console.log("parent login");
+          ws.send(convertToJson("parent_login", parent_html));
+          console.log(JSON.stringify(r));
+          // correct password
+          if (r.password === passwrd) {
+              ws.send(convertToJson("parent_login", parent_html));
+          }
+          else {
+            ws.send(convertToJson("bad_login", "incorrect password"));
+          }
+          // incorrect password
+        }
+        // no user in database
+        else {
+          ws.send(convertToJson("bad_login", "no user"));
+        }
+      });
+    }
+  });
+}
 
 //log out the server host and port number so we can easily connect.
 console.log(os.hostname+":"+port);
-// db.close((err) => {
-//   if (err) {
-//     return console.error(err.message);
-//   }
-//   console.log('Close the database connection.');
-// });
