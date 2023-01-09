@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/rupert648/stacshack2020#readme",
   "dependencies": {
-    "firebase-admin": "^8.10.0",
+    "firebase-admin": "^11.4.1",
     "sqlite3": "^4.1.1"
   }
 }
